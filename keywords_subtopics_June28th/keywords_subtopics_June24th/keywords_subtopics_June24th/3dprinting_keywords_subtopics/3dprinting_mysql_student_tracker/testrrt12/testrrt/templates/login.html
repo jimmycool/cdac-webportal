@@ -1,0 +1,68 @@
+<html>
+{% load static %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+   <!--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+   -->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href={% static 'style.css' %}>
+<style>
+   a:hover
+   {
+   transition: background-color 1.5s ease;
+	background-color:white;
+   }
+   #pass:focus
+   {
+      transform: translateX(-5px);
+   }
+</style>
+</head>
+<body>
+   <img src="/static/3dprinting_jpg_banner.png" width="70%" height="100%"></img>
+   <div style="display: grid;grid-template-columns: 1fr 2fr 1fr;" class=".container-fluid">
+      <div></div>
+    <div id="logedin" align="center">
+      
+         {% if error %}
+      <span  style="color:rgb(16, 15, 15);font-size: medium;">
+    
+    <span class="alert" role="alert">
+    <span style="color:red;">{{ error }}</span>
+    {% endif %}
+    {% if messages %}
+     <span  style="color:rgb(16, 15, 15);font-size: medium;">
+    
+    <span class="alert" role="alert">
+    <span style="color:rgb(20, 238, 31);">{{ messages }}</span>
+    {% endif %}
+    </span>  
+    </span>  
+    <form method="post">
+      <img src="/static/cdaclogo.png" width="50%" height="20%">
+      <h1>Login</h1> 
+      {% csrf_token %}
+      <span style="color:rgb(22, 18, 18);"><i><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M430.5-680.5Q410-701 410-730t20.5-49.5Q451-800 480-800t49.5 20.5Q550-759 550-730t-20.5 49.5Q509-660 480-660t-49.5-20.5ZM400-160v-200h-40v-180q0-33 23.5-56.5T440-620h80q33 0 56.5 23.5T600-540v180h-40v200H400Z"/></svg></i><i>Username*</i> {{ form.username }}</span>
+      <span id="pass" style="color:rgb(11, 10, 10);"><i><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h40v-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm0-80h480v-400H240v400Zm296.5-143.5Q560-327 560-360t-23.5-56.5Q513-440 480-440t-56.5 23.5Q400-393 400-360t23.5 56.5Q447-280 480-280t56.5-23.5ZM360-640h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80ZM240-160v-400 400Z"/></svg></i><i>Password*</i>{{form.password}}
+</span>
+    <br>
+    <br>
+    <button type="submit" class="btn btn-primary" style="margin-top: 10px; border-radius: 10px;">Login</button>
+    <button type="reset" class="btn btn-primary" style="margin-top: 10px; border-radius: 10px;">Reset</button>
+    </form>
+    <span>
+    <a href="{% url 'forgot_password' %}" style="margin-bottom:2vh;">Forgot Password</a>
+    </span>
+    <span>
+    <a href="{% url 'register' %}">Register</a>
+    </span>
+    </div>
+    <div></div>
+    </div>
+</body>
+</html>

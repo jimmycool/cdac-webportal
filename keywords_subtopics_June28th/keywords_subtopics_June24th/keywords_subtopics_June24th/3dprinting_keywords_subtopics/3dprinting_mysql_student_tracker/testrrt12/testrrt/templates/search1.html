@@ -1,0 +1,139 @@
+<html>
+{% load static %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<style>
+    a:hover{ background-color:rgb(248, 245, 247); transition: background-color 1s ease; cursor:pointer; }
+    body { font-family: 'Arial', sans-serif; margin:0; padding:0; background: linear-gradient(135deg, #e554be 0%, #865ad2 100%); color:#333; display:flex; min-height:100vh; }
+</style>
+   <link rel="stylesheet" href={% static 'style.css' %}>
+
+</head>
+<body onload="" style="color:black;">
+    <div id="Main1" style="display:grid;grid-template-rows: 1fr 1fr;">
+    <div id="Main" style="display:grid;grid-template-columns: 1fr 2fr 1fr;">
+    <div class=".container-fluid">
+        <nav id="Nav" style="background-color: rgb(41, 172, 237);overflow-y: auto; overflow-x: fixed;color:rgb(18, 18, 18);">
+        {% if isAdmin %}
+            <ul style="list-style:None;">
+		<p><li><img src="/static/cdaclogo.png" width="100px" height="100px"></img></li>  
+        </p>
+		<p>
+		<li><a href="/home"><span class="glyphicon glyphicon-home">Home</span></a></li>
+		</p>
+		<p>	
+		<li><a href="/upload"  style="color:rgb(21, 19, 19);font-size:16px;"><span class="glyphicon glyphicon-upload"></span> Upload document</a></li>
+		</p>
+		<p>
+		<li><a href="/upload_video1"  style="color:rgb(16, 16, 16);font-size:16px;"><span class="glyphicon glyphicon-file"></span> Upload Video</a></li>
+		</p>
+		<p>
+		<li><a href="/view"  style="color:rgb(14, 14, 14);font-size:16px;"><span class="glyphicon glyphicon-eye-open"></span> View Documents</a></button></li>
+		</p>
+		<p>
+		<li><a href="/view1"  style="color:rgb(20, 19, 19);font-size:16px;"><span class="glyphicon glyphicon-film"></span> View Videos</a></li>
+		</p>
+		<p>
+		<li><a id="polycode"href="/search"  style="color:rgb(14, 14, 14);font-size:16px;"><span class="glyphicon glyphicon-search"></span> Search Documents</a></li>
+		</p>
+		<p>
+		<li><a href="/search_video"  style="color:rgb(14, 14, 14);font-size:16px;background-color: aliceblue;"><span class="glyphicon glyphicon-hd-video"></span> Search Videos</a></li>
+        </p>
+		<!--
+		<p>
+		<li><a href="/logout"  style="color:rgb(10, 9, 9);font-size:16px;"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+		</p>-->
+		<p>
+		<li><span style="color:black;">Hello {{ user.email }}</span></li>
+	    </p>  
+	    </ul>
+        {% else %}
+            <ul style="list-style:none;">
+                <p><li><img src="/static/cdaclogo.png" width="100px" height="100px"></li></p>
+                <p><li><a href="/home"><span class="glyphicon glyphicon-home">Home</span></a></li></p>
+                <p><li><a href="/view"><span class="glyphicon glyphicon-eye-open"></span> View Documents</a></li></p>
+                <p><li><a href="/view1"><span class="glyphicon glyphicon-film"></span> View Videos</a></li></p>
+                <p><li><a href="/search"><span class="glyphicon glyphicon-search"></span> Search Documents</a></li></p>
+                <p><li><a href="/search_video"><span class="glyphicon glyphicon-hd-video"></span> Search Videos</a></li></p>
+                <p><li><span style="color:black;">Hello {{ user.email }}</span></li></p>
+            </ul>
+        {% endif %}
+        </nav>
+    </div>
+
+    <div style="padding-left: 100px;">
+     <center>
+        <h1>Search on Videos tags</h1>
+        {% for t in tagsd %}
+            <span><a href="?tags={{ t }}">{{ t }}</a></span>
+        {% endfor %}
+      
+
+    <h1>Search by Topic / Subtopic</h1>
+    <form method="get" id="topicSearchForm">
+        <div class="form-group">
+            <label for="topicSelect">Topic</label>
+            <select id="topicSelect" name="topics" class="form-control" style="width:300px;">
+                <option value="">-- Any topic --</option>
+                {% for t in topics %}
+                <option value="{{ t }}" {% if request.GET.topics == t %}selected{% endif %}>{{ t }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="subtopicSelect">Subtopic</label>
+            <select id="subtopicSelect" name="subtopics" class="form-control" style="width:300px;">
+                <option value="">-- Any subtopic --</option>
+                {% for s in subtopics %}
+                <option value="{{ s }}" {% if request.GET.subtopics == s %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+   </center>
+    <script>
+    document.addEventListener('DOMContentLoaded', function(){
+        try{
+            const subtopicMap = {{ subtopic_map|default:'{}'|safe }};
+            const topicSel = document.getElementById('topicSelect');
+            const subSel = document.getElementById('subtopicSelect');
+            if(!topicSel || !subSel) return;
+            function populate(){
+                const vals = subtopicMap[topicSel.value] || [];
+                const cur = subSel.value;
+                subSel.innerHTML = '';
+                vals.forEach(function(v){
+                    const opt = document.createElement('option');
+                    opt.value = v; opt.text = v;
+                    if(v === cur) opt.selected = true;
+                    subSel.appendChild(opt);
+                });
+            }
+            topicSel.addEventListener('change', populate);
+            populate();
+        }catch(e){console.error(e)}
+    });
+    </script>
+
+    </div>
+
+    <div>
+        <p align="right"></p>
+        <span id="right1" style="color:rgb(6, 0, 128);font-size:20px;border-bottom: solid 0.5px;" onclick="shownavright();">{{ user.get_full_name }}</span>
+        <span id="rightnav" style="display:none;background-color: antiquewhite;border: solid 1px;">
+            <p><img src="{{ '/media/pic/' }}{{ picture }}" style="border-radius: 40%;" width="50px" height="50px" align="right"></p>
+            <p align="left" style="border-bottom: salmon 1px;"><a href="/Picture">Update profile</a></p>
+            <p align="left"><a href="/logout">Logout</a></p>
+        </span>
+    </div>
+    </div>
+    <div style="padding-top: 14vh;">{% include 'footer.html' %}</div>
+    </div>
+</body>
+</html>

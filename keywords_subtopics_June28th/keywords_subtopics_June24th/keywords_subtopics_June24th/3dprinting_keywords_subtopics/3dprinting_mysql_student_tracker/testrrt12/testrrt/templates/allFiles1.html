@@ -1,0 +1,150 @@
+<html>
+{% load static %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<script type="text/javascript">
+	function shownavright()
+	{
+		if(document.getElementById('rightnav').style.display=="none")
+	{
+		
+		document.getElementById('rightnav').style.display="block";
+	}
+	else
+	{
+		document.getElementById('rightnav').style.display="none";
+	}
+	}
+</script>
+	<style>
+	a:hover{
+		transition: background-color 1.5s ease;
+		background-color:rgb(247, 239, 244);
+	}
+	#right1:hover
+	{
+		cursor:pointer;
+	}
+	
+</style>
+   <link rel="stylesheet" href={%static 'style.css' %}>
+
+</head>
+<body style="color:black;">
+	<div id="Main1" style="display:grid;grid-template-rows:1fr 2fr;">
+		
+	<div id="Main" style="display:grid;grid-template-columns: 1fr 2fr 1fr;" class=".container-fluid">
+	<div>
+	<nav id="Nav" style="background-color: rgb(87, 197, 244);overflow-y: auto;overflow-x: fixed;color:rgb(248, 245, 245);">
+		{% if isAdmin %}
+		<ul style="list-style:None;">
+			<p><li><img src="/static/cdaclogo.png" width="100px" height="100px"></li></p>
+			<p><li><a href="/home"><span class="glyphicon glyphicon-home">Home</span></a></li></p>
+			<p><li><a href="/upload" style="color:rgb(21, 19, 19);font-size:16px;"><span class="glyphicon glyphicon-upload"></span> Upload document</a></li></p>
+			<p><li><a href="/upload_video1" style="color:rgb(16, 16, 16);font-size:16px;"><span class="glyphicon glyphicon-file"></span> Upload Video</a></li></p>
+			<p><li><a href="/view" style="color:rgb(14, 14, 14);font-size:16px;"><span class="glyphicon glyphicon-eye-open"></span> View Documents</a></li></p>
+			<p><li><a href="/view1" style="color:rgb(20, 19, 19);font-size:16px;background-color: aliceblue;"><span class="glyphicon glyphicon-film"></span> View Videos</a></li></p>
+			<p><li><a href="/search" style="color:rgb(14, 14, 14);font-size:16px;"><span class="glyphicon glyphicon-search"></span> Search Documents</a></li></p>
+			<p><li><a href="/search_video" style="color:rgb(14, 14, 14);font-size:16px;"><span class="glyphicon glyphicon-hd-video"></span> Search Videos</a></li></p>
+			<p><li><span style="color:black;">Hello {{ user.email }}</span></li></p>
+		</ul>
+		{% else %}
+		<ul style="list-style: none;">
+			<p><li><img src="/static/cdaclogo.png" width="100px" height="100px"></li></p>
+			<p><li><a href="/home"><span class="glyphicon glyphicon-home">Home</span></a></li></p>
+			<p><li><a href="/view" style="color:rgb(14, 14, 14);font-size:16px;"><span class="glyphicon glyphicon-eye-open"></span> View Documents</a></li></p>
+			<p><li><a href="/view1" style="color:rgb(20, 19, 19);font-size:16px;"><span class="glyphicon glyphicon-film"></span> View Videos</a></li></p>
+			<p><li><a href="/search" style="color:rgb(14, 14, 14);font-size:16px;"><span class="glyphicon glyphicon-search"></span> Search Documents</a></li></p>
+			<p><li><a href="/search_video" style="color:rgb(14, 14, 14);font-size:16px;"><span class="glyphicon glyphicon-hd-video"></span> Search Videos</a></li></p>
+			<p><li><span style="color:black;">Hello {{ user.email }}</span></li></p>
+		</ul>
+		{% endif %}
+	</nav>
+	</div>
+	<div id="t" style="padding-left: 100px;overflow-y:hidden;" class=".container-fluid">
+	<span style="width: min-content;">
+	        <input type="text" id="search" style="color:black;border-radius: 30px;" placeholder="Search" width="1"/>
+			<button type="submit" style="position: absolute;top:5px;left:148vh;border-radius:30px;" onclick="searchFiles();"><i><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1E124A"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
+            </i></button>
+    </span>
+
+	<center>
+	<div class="container" style="padding-top: 20px;">
+		<div class="row">
+		{% if page_obj.object_list != None %}
+			{% for x in page_obj.object_list %}
+				<div class="col-xs-12 col-sm-6 col-md-4" style="padding-bottom: 20px;">
+					<div class="embed-responsive embed-responsive-16by9">
+						<video class="embed-responsive-item" controls controlsList="nodownload">
+							<source src="{{ '/media/' }}{{ x.document }}" type="video/mp4">
+						</video>
+					</div>
+					<div style="margin-top: 1vh;">
+						{% for tag in x.tags.all %}
+						<span class="badge bg-secondary">{{ tag.name }}</span>
+						{% endfor %}
+					</div>
+				</div>
+			{% endfor %}
+		{% else %}
+			{% for x in files %}
+				<div class="col-xs-12 col-sm-6 col-md-4" style="padding-bottom: 20px;">
+					<div class="embed-responsive embed-responsive-16by9">
+						<video class="embed-responsive-item" controls controlsList="nodownload">
+							<source src="{{ '/media/' }}{{ x.document }}" type="video/mp4">
+						</video>
+					</div>
+					<div style="margin-top: 8px;">
+						{% for tag in x.tags.all %}
+						<span class="badge bg-secondary">{{ tag.name }}</span>
+						{% endfor %}
+					</div>
+				</div>
+			{% endfor %}
+		{% endif %}
+		</div>
+	</div>
+	 <span style="color:aqua;">
+		{% if page_obj.has_previous %}
+		<a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+		{% endif %}
+		{% if page_obj.has_next %}
+		<a href="?page={{ page_obj.next_page_number }}">Next</a>
+		{% endif %}
+	</span>
+	<!--<span>
+		Page {{ page_obj.object_list.index }} of {{ page_obj.object_list.end_index }}
+	</span>-->
+	</center>
+	</div>
+	
+		<div>
+			<p align="right">
+<!--<img src="{{ '/media/pic/' }}{{ picture }}" style="border-radius: 40%;" width="150px" height="150px" align="right"></img>
+-->
+</p>
+<span id="right1" style="color:rgb(6, 0, 128);position: relative;left:15px;right:100px;font-size:20px;border-bottom: solid 0.5px;" onclick="shownavright();">{{ user.get_full_name }}</span>
+<span id="rightnav" style="display:none;background-color: antiquewhite;border: solid 1px;">  
+<p><img src="{{ '/media/pic/' }}{{ picture }}" style="border-radius: 40%;" width="50px" height="50px" align="right"></img></p>
+
+	<p align="left" style="border-bottom: salmon 1px;"><a href="/Picture">Update profile</a></p>
+  <p align="left"><a href="/logout">Logout</a></p>
+</span>
+		{% include 'right.html' %}
+	
+ 	</div>
+	</div>
+<div style="padding-top: 1vh; padding-left:50vh;">
+	{% include 'footer.html' %}
+</div>
+	</div>
+	
+</body>
+</html>

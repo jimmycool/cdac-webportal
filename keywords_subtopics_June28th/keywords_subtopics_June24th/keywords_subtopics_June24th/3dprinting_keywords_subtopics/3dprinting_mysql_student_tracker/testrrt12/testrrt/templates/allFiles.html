@@ -1,0 +1,183 @@
+
+<html>
+{% load static %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="http://mozilla.github.io/pdf.js/build/pdf.js"></script>
+<link rel="stylesheet" type="text/css" href="pdfviewer.css">
+
+<script type="text/javascript">
+	
+	function searchFiles()
+	{
+	  if(document.getElementById('search').value!="")
+	  { 	
+		window.location.href="/description/"+document.getElementById('search').value; 	
+	  } 
+	}
+	
+	function shownavright()
+	{
+		if(document.getElementById('rightnav').style.display=="none")
+	{
+		
+		document.getElementById('rightnav').style.display="block";
+	}
+	else
+	{
+		document.getElementById('rightnav').style.display="none";
+	}
+	}
+function deleted()
+{
+	alert("File has been deleted succesfully");
+}   
+
+
+</script>
+<style>
+	nav.a:hover{
+				transition: background-color 0.5s ease;
+		background-color:rgb(247, 239, 244);
+		cursor:pointer;
+	}
+	table.td.a:hover
+	{
+		background-color: black;
+		color:rgb(232, 237, 237);
+	}
+	#right1:hover
+	{
+		cursor:pointer;
+	}
+</style>
+	 <link rel="stylesheet" href={%static 'style.css' %}>
+
+</head>
+<body id="mainBody" onload="" style="color:rgb(246, 246, 246);">
+<div id="Main1" style="display:grid;grid-template-rows: 1fr 1fr;">
+
+	<div id="Main" style="display:grid;grid-template-columns: 1fr 2fr 1fr;" class=".container-fluid">
+		<div style="background-color:rgb(87, 197, 244);">
+		<nav id="Nav" style="background-color: rgb(87, 197, 244);overflow-y: auto;overflow-x: fixed;color:rgb(248, 245, 245);">
+			{% if isAdmin %}
+			<ul style="list-style:None;">
+				<p><li><img src="/static/cdaclogo.png" width="120vh" height="120vh"></li></p>
+				<p><li><a href="/home"><span class="glyphicon glyphicon-home">Home</span></a></li></p>
+				<p><li><a href="/upload" style="color:rgb(21, 19, 19);font-size:16px;"><span class="glyphicon glyphicon-upload"></span> Upload document</a></li></p>
+				<p><li><a href="/upload_video1" style="color:rgb(16, 16, 16);font-size:16px;"><span class="glyphicon glyphicon-file"></span> Upload Video</a></li></p>
+				<p><li><a href="/view" style="color:rgb(14, 14, 14);font-size:16px;background-color: aliceblue;"><span class="glyphicon glyphicon-eye-open"></span> View Documents</a></li></p>
+				<p><li><a href="/view1" style="color:rgb(20, 19, 19);font-size:16px;"><span class="glyphicon glyphicon-film"></span> View Videos</a></li></p>
+				<p><li><a href="/search" style="color:rgb(14, 14, 14);font-size:16px;"><span class="glyphicon glyphicon-search"></span> Search Documents</a></li></p>
+				<p><li><a href="/search_video" style="color:rgb(14, 14, 14);font-size:16px;"><span class="glyphicon glyphicon-hd-video"></span> Search Videos</a></li></p>
+				<p><li><span style="color:black;">Hello {{ user.email }}</span></li></p>
+			</ul>
+			{% else %}
+			<ul style="list-style: none;">
+				<p><li><img src="/static/cdaclogo.png" width="100px" height="100px"></li></p>
+				<p><li><a href="/home"><span class="glyphicon glyphicon-home">Home</span></a></li></p>
+				<p><li><a href="/view" style="color:rgb(14, 14, 14);font-size:16px;background-color: aliceblue;"><span class="glyphicon glyphicon-eye-open"></span> View Documents</a></li></p>
+				<p><li><a href="/view1" style="color:rgb(20, 19, 19);font-size:16px;"><span class="glyphicon glyphicon-film"></span> View Videos</a></li></p>
+				<p><li><a href="/search" style="color:rgb(14, 14, 14);font-size:16px;"><span class="glyphicon glyphicon-search"></span> Search Documents</a></li></p>
+				<p><li><a href="/search_video" style="color:rgb(14, 14, 14);font-size:16px;"><span class="glyphicon glyphicon-hd-video"></span> Search Videos</a></li></p>
+				<p><li><span style="color:black;">Hello {{ user.email }}</span></li></p>
+			</ul>
+			{% endif %}
+		</nav>
+		
+		        </div>
+		
+		<div id="p" style="padding-left: 1vh;" class=".container-fluid">
+			<span style="width: min-content;">
+	        <input type="text" id="search" style="color:black;border-radius: 30px;" placeholder="Search" width="1"/>
+			<button type="submit" style="position: absolute;top:5px;left:148vh;border-radius: 30px;" onclick="searchFiles();"><i><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1E124A"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
+	            </i></button>
+			
+				</span>
+<table  class="table-bordered table-responsive"  align="center" style="width:50vh;border:0.5px solid black;overflow-y: scroll;" cellpadding="2">
+<thead>
+	<tr scope="row" style="color:black;"> 
+		<th scope="col" align="center" style="padding-left: 14vh;font-size: larger;font-family: 'Times New Roman', Times, serif;">Documents</th>
+	</tr>
+</thead>
+<tbody>
+	{% for x in files %}
+		<tr scope="row" style="padding-right: 2vh; width: 50%;">
+      
+			<td style="color:black;padding-bottom: 20px;margin-bottom: 25px;" align="left">
+				<p align="left">
+				<img src="/static/pdf-1.png" width="150vh" height="50vh"></img>
+      
+				{% for tag in x.tags.all %}
+			<div class="badge bg-secondary">{{ tag.name }}</div>
+			{% endfor %}</p>
+			
+	  <p align="right" style="padding-left: 30vh;">
+		
+	  <button class="btn btn-primary btn-sm"><a href="/viewfile/{{x.id}}" target="_blank"><span style="color:rgb(15, 15, 15);"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v240h-80v-200H520v-200H240v640h360v80H240Zm638 15L760-183v89h-80v-226h226v80h-90l118 118-56 57Zm-638-95v-640 640Z"/></svg></span></a></button>
+	      
+	</span> 
+	  <!--<td><button type="button"  class="btn btn-outline-primary">Edit</button></td>-->
+		 {% if isAdmin %} 
+	  <button type="button" onclick="deleted();" class="btn btn-primary btn-sm"><a href="/delete/{{ x.id }}"><span style="color:rgb(12, 12, 12);"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg></span></a></button>
+	  </p>
+	</td>
+    
+		</tr>
+		{% endif %}
+	{% endfor %}
+	{% for x in message %}
+	<p style="color:green;">{{x}}</p>
+	{%endfor%}    
+</tbody>
+</table>
+<center>
+	<span style="color:black; padding-left: 120px;padding-top:22px;">
+	{% for page_obj in files.paginator.page_range %}
+		{% if files.number == page_obj %}
+			<button style="color:blue;">{{page_obj}}</button>    
+		{% else %}
+			<a href="?page={{page_obj}}">{{page_obj}}</a>
+		{% endif %}
+	{% endfor %}
+	
+	
+	</span>
+</center>
+
+</div>
+<div class=".container-fluid">
+	<p align="right">
+
+</p>
+<span id="right1" style="color:rgb(6, 0, 128);font-size:20px;border-bottom: solid 0.5px;" onclick="shownavright();">{{ user.get_full_name }}</span>
+<span id="rightnav" style="display:none;background-color: antiquewhite;border: solid 1px;">  
+<p><img src="{{ '/media/pic/' }}{{ picture }}" style="border-radius: 40%;" width="50px" height="50px" align="right"></img></p>
+
+	<p align="left" style="border-bottom: salmon 1px;"><a href="/Picture">Update profile</a></p>
+	<p align="left"><a href="/logout">Logout</a></p>
+</span>
+<span>
+{% include 'right.html' %}
+</span>
+</div>
+</div>
+<div style="padding-top: 1vh; padding-left:50vh;">
+	{% include 'footer.html' %}
+</div>
+</div>
+</body>
+</html>
+</p>
+
+</div>
+</body>
+</html>

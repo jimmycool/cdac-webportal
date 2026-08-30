@@ -1,0 +1,78 @@
+<html>
+{% load static %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+	
+
+</script>
+
+<style>
+	a:hover{
+		background-color:rgb(248, 245, 247);
+		transition: background-color 1s ease;
+		cursor:pointer;
+	}
+	body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #e554be 0%, #865ad2 100%);
+    color: #333;
+    display: flex;
+    min-height: 100vh;
+}
+#right:hover
+	{
+		cursor:pointer;
+	}
+</style>
+   <link rel="stylesheet" href={%static 'style.css' %}>
+
+</head>
+<body onload="" style="color:black;">
+	<div id="Main1" style="display:grid;grid-template-rows: 1fr 1fr;">
+
+	<div id="Main" style="display:grid;grid-template-columns: 1fr 2fr 1fr;">
+	<div>
+		<nav id="Nav" style="background-color: rgb(87, 197, 244);overflow-y: auto; position: fixed;color:rgb(248, 245, 245);">
+		<ul style="list-style:None;">
+			<li><img src="/static/cdaclogo.png" width="20%" height="20%"></li>
+			<p>
+			<li><a href="/home"><span class="glyphicon glyphicon-home">Home</span></a></li>
+			</p>
+			<p>
+			<li><a href="/upload" style="color:rgb(21, 19, 19);font-size:16px;"><span class="glyphicon glyphicon-upload"></span> Upload document</a></li>
+			</p>
+			<p>
+			<li><a href="/upload_video1" style="color:rgb(16, 16, 16);font-size:16px;"><span class="glyphicon glyphicon-file"></span> Upload Video</a></li>
+			</p>
+			<p>
+			<li><a href="/view" style="color:rgb(14, 14, 14);font-size:16px;"><span class="glyphicon glyphicon-eye-open"></span> View Documents</a></li>
+			</p>
+			<p>
+			<li><a href="/view1" style="color:rgb(20, 19, 19);font-size:16px;"><span class="glyphicon glyphicon-film"></span> View Videos</a></li>
+			</p>
+		</ul>
+		</nav>
+
+<div>
+	<p align="right" style="color:green;font-size:20px;">Hello {{user.username}},</p>
+
+	{% if user.username == 'cdac2' %}
+<p align="right"><img src="{{ '/media/pic/' }}{{ picture }}" style="border-radius: 40%;" width="50px" height="50px" align="right"></img></p>
+
+	{% endif %}
+ 	</div>
+	<div>
+					{% include 'footer.html' %}
+
+	</div>
+	</div>
+
+</body></html>

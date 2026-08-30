@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+              $("#t").click(function()
+        {$("#video1").fadeIn("slow");
+        });
+        });
+        $(document).ready(function(){
+              $("#t1").click(function()
+        {$("#video1").fadeOut("slow");
+        });
+        });
+    </script> 
+    </head>
+    <body>
+        <button id="t">Show Video</button>
+        <button id="t1">Hide Video</button>
+      <div id="video1" style="display:none;">
+      <video width="440" height="360"  controls controlsList="nodownload" >
+			  <source src={{'/media/'}}{{x.document}}  type="video/mp4">
+			</video>
+      </div>
+    </body>
+</html>

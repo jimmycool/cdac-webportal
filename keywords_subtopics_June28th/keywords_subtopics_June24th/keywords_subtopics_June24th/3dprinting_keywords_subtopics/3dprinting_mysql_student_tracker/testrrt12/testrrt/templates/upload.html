@@ -1,0 +1,161 @@
+<html>
+{% load static %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+    <title>Upload</title>
+   
+    <!--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+   -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	function shownavright()
+	{
+		if(document.getElementById('rightnav').style.display=="none")
+	{
+		
+		document.getElementById('rightnav').style.display="block";
+	}
+	else
+	{
+		document.getElementById('rightnav').style.display="none";
+	}
+	}
+</script>
+  <style>
+   @media (min-width: 1024px){
+   a:hover{
+        transition: background-color 0.5s ease;
+		background-color:rgb(247, 239, 244);
+		cursor:pointer;
+	}
+	nav.a:hover{
+		background-color:rgb(254, 249, 254);
+		transition: background-color 0.5s ease;
+		cursor:pointer;
+	}
+  body {
+    font-family: 'Josefin Sans', 'sans-serif';
+    font-style: 'italic';
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #e554be 0%, #865ad2 100%);
+    color: #333;
+    display: flex;
+    min-height: 100vh;
+}
+#right1:hover
+	{
+		cursor:pointer;
+	}
+}
+</style> 
+   <link rel="stylesheet" href={%static 'style.css' %}>
+
+</head>
+<body >
+  <div id="Main1" style="display:grid;grid-template-rows: 1fr 1fr;">
+
+  <div style="display: grid;grid-template-columns: 1fr 2fr 1fr;color:black;">
+  <div class=".container-fluid">
+  <nav id="Nav" style="background-color: rgb(87, 197, 244);overflow-y: auto;overflow-x: fixed;color:rgb(248, 245, 245);">
+        <ul style="list-style:None;">
+            <p>
+        <li><img src="/static/cdaclogo.png" width="100px" height="100px"></li>  
+        </p>
+        <p>
+        <li><a href="/home"><span class="glyphicon glyphicon-home">Home</span></a></li>
+        </p>
+        <p>    
+        <li><a href="/upload"  style="color:rgb(21, 19, 19);font-size:16px;background-color: aliceblue;"><span class="glyphicon glyphicon-upload"></span> Upload document</a></li>
+        </p>
+        <p>
+        <li><a href="/upload_video1"  style="color:rgb(16, 16, 16);font-size:16px;"><span class="glyphicon glyphicon-file"></span> Upload Video</a></li>
+        </p>
+        <p>
+        <li><a href="/view"  style="color:rgb(14, 14, 14);font-size:16px;"><span class="glyphicon glyphicon-eye-open"></span> View Documents</a></li>
+        </p>
+        <p>
+        <li><a href="/view1"  style="color:rgb(20, 19, 19);font-size:16px;"><span class="glyphicon glyphicon-film"></span> View Videos</a></li>
+        </p>
+        <p>
+        <li><a href="/search"  style="color:rgb(14, 14, 14);font-size:16px;"><span class="glyphicon glyphicon-search"></span> Search Documents</a></li>
+        </p>
+        <p>
+        <li><a href="/search_video"  style="color:rgb(14, 14, 14);font-size:16px;"><span class="glyphicon glyphicon-hd-video"></span> Search Videos</a></li>
+        </p>
+        <p>
+        <li><span style="color:black;">Hello {{ user.email }}</span></li>
+        </p>
+        </ul>
+    </nav>
+</div>
+<div>
+<center>
+{% if messages  %}
+    <span v-if={messages}>
+    <span class="alert alert-success" role="alert">
+    {{ messages }}
+    </span>
+    </span>
+{% endif %}
+</center>
+
+    
+    <form method="post" enctype="multipart/form-data">
+      <h1>Upload Documents</h1>
+      {% csrf_token %} 
+      {{form.as_div}}
+    <button type="submit" class="btn btn-primary">Upload</button>
+    <button type="reset" class="btn btn-primary">Reset</button>
+    
+    </form>
+</div>
+<div>
+ 
+<p align="right">
+<!--<img src="{{ '/media/pic/' }}{{ picture }}" style="border-radius: 40%;" width="150px" height="150px" align="right"></img>
+-->
+</p>
+<span id="right1" style="color:rgb(6, 0, 128);font-size:20px;border-bottom: solid 0.5px;" onclick="shownavright();">{{ user.get_full_name }}</span>
+<span id="rightnav" style="display:none;background-color: antiquewhite;border: solid 1px;">  
+<p><img src="{{ '/media/pic/' }}{{ picture }}" style="border-radius: 40%;" width="50px" height="50px" align="right"></img></p>
+
+  <p align="left" style="border-bottom: salmon 1px;"><a href="/Picture">Update profile</a></p>
+  <p align="left"><a href="/logout">Logout</a></p>
+</span>
+</div>
+</div>
+<div style="padding-top: 1vh; padding-left:50vh;">
+	{% include 'footer.html' %}
+</div>
+</div>    
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  try{
+    const subtopicMap = {{ subtopic_map|default:'{}'|safe }};
+    const topicSel = document.querySelector('select[name="topic"]');
+    const subSel = document.querySelector('select[name="subtopics"]');
+    if(!topicSel || !subSel) return;
+    function populate(){
+      const vals = subtopicMap[topicSel.value] || [];
+      subSel.innerHTML = '';
+      vals.forEach(function(v){
+        const opt = document.createElement('option');
+        opt.value = v; opt.text = v;
+        subSel.appendChild(opt);
+      });
+    }
+    topicSel.addEventListener('change', populate);
+    populate();
+  }catch(e){console.error(e)}
+});
+</script>
+
+</body>
+</html>

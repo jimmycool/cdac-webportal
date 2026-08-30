@@ -1,0 +1,57 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: whitesmoke;
+    color: #313030;
+    display: flex;
+    min-height: 100vh;
+    font-weight: bolder;
+}
+
+/* Form Styles */
+form {
+    max-width: 600px;
+    margin:  10 auto;
+}
+form.h1{
+	align:center;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    bs-text-opacity: 1;
+    color: rgba(var(--bs-primary-rgb), var(--bs-text-opacity)) !important;
+}
+form.button{
+    background:blue;
+    border: 1px solid #000000;
+    margin-left: 20px;
+    color: #000000;
+    padding: 25px 30px;
+    height: 3em;
+    line-height: 2.25em;
+    width: 100% !important;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+input[type="text"], input[type="email"], select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+footer{
+    color:white;
+    background-color: black;
+}
+p.ul.li.a:hover
+{
+ border-bottom: 1px;
+ transition: all 0.5s linear;   
+}

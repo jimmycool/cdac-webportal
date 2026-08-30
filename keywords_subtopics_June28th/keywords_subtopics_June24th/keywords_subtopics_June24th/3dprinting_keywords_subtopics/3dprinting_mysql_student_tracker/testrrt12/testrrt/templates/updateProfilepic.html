@@ -1,0 +1,33 @@
+<html>
+{% load static %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+   <link rel="stylesheet" href={%static 'style.css' %}>
+   
+    <title>Update profile picture</title>
+</head>
+<body  style="color:rgb(207, 229, 248);">
+    <form method="post" align="center">
+        <h1>Choose Avtar</h1>
+        {% csrf_token %}
+        <span style="color:blue;">{{form.picture.label_tag}}</span>
+    {{form.picture}}
+    <span style="color:red;">{{form.errors}}
+    </span>
+        <button type="submit" class="btn btn-primary">Update Avtaar</button>
+     {% if messages %}
+    <ul>
+    {% for message in messages %}
+     <li style="color:brown;">{{ message }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    </form>
+   
+</body>
+</html>

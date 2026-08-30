@@ -1,0 +1,55 @@
+<html>
+{% load static %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+   <link rel="stylesheet" href={%static 'style.css' %}>
+   
+    <title >Register</title>
+    <style>
+        body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: white;
+    color: #333;
+    display: flex;
+    min-height: 100vh;
+}
+    </style>
+</head>
+<body align="center" style="color:black;">
+    <img src="/static/3dprinting_jpg_banner.png" width="70%" height="100%"></img>
+    <form method="post">
+        <img src="/static/cdaclogo.png" width="50%" height="20%">
+        <h1>Register</h1>
+        {% csrf_token %}
+       <label>Username</label> {{form.username}}
+       <label>First Name</label> {{form.firstname}}
+       <label>Last Name</label> {{form.lastname}}
+       <label>Account Type</label>{{form.account}}
+       <label>Email Id</label> {{form.email}}
+       <label>Password</label> {{form.password}}
+      <!--  {{ form.as_table }} -->
+        <button type="submit" style="margin: 10px;" class="btn btn-primary">Register</button>
+    </form>
+    {% if messages%}
+    {% if messages.tags == 'success' %}
+    {% for message in messages %}
+    <p style="background-color: green;">{{message}}</p>
+    {% endfor %}
+    {% endif %}
+
+
+    {% if messages.tags == 'errors' %}
+    {% for message in messages %}
+    <p style="background-color: red;">{{message}}</p>
+    {% endfor %}
+    {% endif %}
+    {% endif %} 
+</html>
